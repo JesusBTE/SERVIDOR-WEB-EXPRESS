@@ -71,7 +71,7 @@ export const getOneTarea = function (req, res) {
 
 export const deleteTarea = function (req, res) {
   const tareaId = req.params.id;
-  const tareaIndex = tareas.findIndex((t) => t.id === tareaId);
+  const tareaIndex = tareas.findIndex((t) => t.id === Number(tareaId));
 
   if (tareaIndex === -1) {
     return res.status(404).json({ error: "Tarea no encontrada." });
