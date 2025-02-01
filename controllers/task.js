@@ -28,12 +28,13 @@ export const getTask = function (req, res) {
 };
 
 export const createTask = function (req, res) {
-  const { task, description } = req.body;
+  const { task, description, completed } = req.body;
   counter += 1;
 
   tasks.push({
     task,
     description,
+    completed,
     id: counter,
   });
 
@@ -54,25 +55,26 @@ export const deleteTask = function (req, res) {
   const taskId = req.params.id;
 
   tasks = tasks.filter(function (task) {
-    return task.id !== taskId;
+    return task.id !== Number(taskId);
   });
 
   res.json(tasks);
 };
 
 export const updateTask = function (req, res) {
-  const userId = req.params.id;
+  const taskId = Number(req.params.id);
   const { task, description, completed } = req.body;
 
-  tasks = task.map(function (user) {
-    if (user.id === userId) {
+  tasks = tasks.map(function (item) {
+    if (item.id === taskId) {
       return {
         task: task,
         description: description,
-        id: user.id,
+        id: taskId,
+        completed: completed,
       };
     } else {
-      return task;
+      return item;
     }
   });
 
